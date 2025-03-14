@@ -11,7 +11,7 @@ LOG_FILE = os.path.join(LOGS_DIR, f"log_{datetime.now().strftime("%Y-%m-%d")}.lo
 # logging configuration
 logging.basicConfig(
     filename=LOG_FILE,
-    format="%(astime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
     # this will create log in datatime - severity (info, warning, error) - log message
     level=logging.INFO,  # logs below info level are ingnored
     # Info, warning and error are displayed
