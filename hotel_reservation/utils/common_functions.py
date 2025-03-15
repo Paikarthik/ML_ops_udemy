@@ -1,5 +1,4 @@
 import os
-import pandas
 import yaml
 from src.logger import get_logger
 from src.custom_exception import CustomException
