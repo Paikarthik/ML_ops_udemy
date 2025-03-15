@@ -1,0 +1,5 @@
+data-ingestion:
+  bucket_name = "ml_ops_trail"
+  bucket_file_name = "Hotel_Reservations.csv"
+  train_ratio = 0.8
+
