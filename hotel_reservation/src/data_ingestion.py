@@ -8,6 +8,9 @@ from config.paths_config import *
 from utils.common_functions import read_yaml
 
 logger = get_logger(__name__)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = (
+    "/home/pai/Downloads/studied-biplane-453706-i8-e8f5adab16a7.json"
+)
 
 
 class DataIngestion:
@@ -72,5 +75,5 @@ class DataIngestion:
 
 
 if __name__ == "__main__":
-    data_ingestion = DataIngestion(CONFIG_PATH)
+    data_ingestion = DataIngestion(read_yaml(CONFIG_PATH))
     data_ingestion.run()

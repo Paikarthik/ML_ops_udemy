@@ -8,3 +8,8 @@ hotel_reservation/Hotel_reservation.egg-info/SOURCES.txt
 hotel_reservation/Hotel_reservation.egg-info/PKG-INFO
 hotel_reservation/Hotel_reservation.egg-info/requires.txt
 hotel_reservation/Hotel_reservation.egg-info
+hotel_reservation/artifacts/raw
+hotel_reservation/config/__pycache__
+hotel_reservation/logs
+hotel_reservation/logs/log_2025-03-15.log
+hotel_reservation/utils/__pycache__

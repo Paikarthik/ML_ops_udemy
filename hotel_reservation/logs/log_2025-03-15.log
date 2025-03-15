@@ -1,0 +1,19 @@
+2025-03-15 18:23:17,362 - INFO - Successfully read the YAML file
+2025-03-15 18:25:10,751 - INFO - Successfully read the YAML file
+2025-03-15 18:25:10,751 - INFO - Data ingestion started with ml_ops_trail and with file Hotel_Reservations.csv
+2025-03-15 18:25:10,751 - INFO - Starting data ingestion
+2025-03-15 18:25:13,755 - WARNING - Compute Engine Metadata server unavailable on attempt 1 of 3. Reason: timed out
+2025-03-15 18:25:17,805 - WARNING - Compute Engine Metadata server unavailable on attempt 2 of 3. Reason: timed out
+2025-03-15 18:25:22,627 - WARNING - Compute Engine Metadata server unavailable on attempt 3 of 3. Reason: timed out
+2025-03-15 18:25:22,628 - WARNING - Authentication failed using Compute Engine authentication due to unavailable metadata server.
+2025-03-15 18:25:22,628 - ERROR - Error while downloading the CSV
+2025-03-15 18:25:22,628 - INFO - Data ingestion completed
+2025-03-15 18:39:32,691 - INFO - Successfully read the YAML file
+2025-03-15 18:39:32,691 - INFO - Data ingestion started with ml_ops_trail and with file Hotel_Reservations.csv
+2025-03-15 18:39:32,691 - INFO - Starting data ingestion
+2025-03-15 18:39:35,552 - INFO - Raw file downloaded successfully downloaded to artifacts/raw/raw.csv
+2025-03-15 18:39:35,552 - INFO - Data split in progress
+2025-03-15 18:39:35,791 - INFO - Train data saved in artifacts/raw/train.csv
+2025-03-15 18:39:35,791 - INFO - Test data saved in artifacts/raw/test.csv
+2025-03-15 18:39:35,793 - INFO - Data ingestion completed successfully
+2025-03-15 18:39:35,793 - INFO - Data ingestion completed
