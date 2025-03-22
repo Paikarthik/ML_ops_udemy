@@ -3,14 +3,14 @@ import pandas as pd
 import numpy as np
 from src.logger import get_logger
 from src.custom_exception import CustomException
-from src.config import *
+from config.paths_config import *
 from utils.common_functions import read_yaml, load_data
-from sklearn.emsemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 from imblearn.over_sampling import SMOTE
 from src.logger import get_logger
 
-logger = get_logger(logger_name = __name__)
+logger = get_logger(__name__)
 
 class DataPreprocessing:
 
@@ -28,7 +28,7 @@ class DataPreprocessing:
             logger.info("Start data preprocessing")
             logger.info("Dropping Columns")
             df.drop(columns = ["Booking_ID", "Unnamed: 0"], inplace = True)
-            df.dropduplicate(inplace = True)
+            df.drop_duplicates(inplace = True)
 
             cat_cols = self.config["data_processing"]["categorical_columns"]
             num_cols = self.config["data_processing"]["numerical_columns"]
@@ -97,11 +97,70 @@ class DataPreprocessing:
             })
             top_features_df = feature_importance_df.sort_values(by = "importance", ascending = False)
 
+            no_features = self.config["data_processing"]["no_of_features"]
             
-            
+            top_n_features = top_features_df["feature"].head(no_features).values
+            logger.info(f"Top n features: {top_features_df}")
+            top_n_df = df[top_n_features.tolist()+ ["booking_status"]]
+
+            logger.info("Feature selection completed")
+
+            return top_n_df
 
         except Exception as e :
-            pass
+            logger.error(f"Error during feature selection {e}")
+            raise CustomException("Error during feature selection", e)
+        
+
+    def save_data(self, df, file_path):
+        try:
+            logger.info("Saving processed data in processed data")
+            df.to_csv(file_path, index = False)
+            logger.info(f"Data saved successfully in {file_path}")
+
+        except Exception as e:
+            logger.error(f"Error during saving data {e}")
+            raise CustomException("Error while saving processed data", e)
+        
+
+    def process(self):
+        try:
+            logger.info("Loading data from raw directory")
+
+            train_df = load_data(self.train_path)
+            test_df = load_data(self.test_path)
+
+            train_df = self.preprocess_data(train_df)
+            test_df = self.preprocess_data(test_df)
+
+            train_df = self.balance_data(train_df)
+            test_df = self.balance_data(test_df)
+
+            train_df = self.select_features(train_df)
+            test_df  = test_df[train_df.columns]
+            # features selected for train df will be selected for test data 
+
+            self.save_data(train_df, PROCESSED_TRAIN_DATA_PATH)
+            self.save_data(test_df, PROCESSED_TEST_DATA_PATH)
+
+            logger.info("Data processing completed successfully")
+        except Exception as e:
+            logger.error(f"Error during pre-processing pipeline execution {e}")
+            raise CustomException("Error while data pre-processing pipeline execution", e)
+        
+
+
+if __name__ == "__main__":
+    data_processor = DataPreprocessing(
+        train_path=TRAIN_FILE_PATH, 
+        test_path=TEST_FILE_PATH, 
+        processed_dir=PROCESSED_DIR,
+        config_path=CONFIG_PATH
+        )
+    data_processor.process()
+             
+
+            
 
 
 

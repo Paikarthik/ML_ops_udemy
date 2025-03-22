@@ -26,7 +26,7 @@ def read_yaml(file_path):
 def load_data(path):
     try: 
         logger.info("Loading data")
-        return pd.read _csv(path)
-    except exception as e:
+        return pd.read_csv(path)
+    except Exception as e:
         logger.error(f"Loading the data {e}")
         raise CustomException("Failed to load the data", e)
