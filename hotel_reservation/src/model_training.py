@@ -12,6 +12,8 @@ from config.paths_config import *
 from config.model_params import *
 from utils.common_functions import read_yaml, load_data
 from scipy.stats import randint 
+import mlflow 
+import mlflow.sklearn
 
 logger = get_logger(__name__)
 
@@ -120,14 +122,27 @@ class ModelTraining():
         
     def run(self):
         try:
-            logger.info("Initiaizing model training pipeline")
+            with mlflow.start_run():
 
-            x_train, y_train, x_test, y_test = self.load_and_split_data()
-            best_lgbm_model = self.train_lgbm(x_train=x_train, y_train=y_train)
-            metrics = self.evaluate_model(x_test=x_test, y_test=y_test, model=best_lgbm_model)
-            self.save_model(best_lgbm_model)
-            
-            logger.info("Model Trainning pipeline completed")
+                logger.info("Initiaizing model training pipeline")
+                logger.info("Starting our Mflow experimentation")
+                logger.info("saving the Training data into ML flow")
+                # save dataset and model trained using artifact
+                mlflow.log_artifact(self.train_path, artifact_path = "datasets")
+                mlflow.log_artifact(self.test_path, artifact_path = "datasets")
+
+
+                x_train, y_train, x_test, y_test = self.load_and_split_data()
+                best_lgbm_model = self.train_lgbm(x_train=x_train, y_train=y_train)
+                metrics = self.evaluate_model(x_test=x_test, y_test=y_test, model=best_lgbm_model)
+                self.save_model(best_lgbm_model)
+                logger.info("Logging model into MLFlow")
+                mlflow.log_artifact(self.model_output_path)
+                logger.info("Logging params and metrics")
+                mlflow.log_params(best_lgbm_model.get_params())
+                mlflow.log_metrics(metrics)
+                
+                logger.info("Model Trainning pipeline completed")
         except Exception as e:
             logger.error(f"Error in model training pipeline {e}")
             raise CustomException("Failed to complete model training pipeline due to exception", e)
