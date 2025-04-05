@@ -22,6 +22,9 @@ pipeline{
                 script{
                     echo 'Setting up our Virtual Environment and Installing dependancies............'
                     sh '''
+                    cd hotel_reservation
+                    '''
+                    sh '''
                     python -m venv ${VENV_DIR}
                     . ${VENV_DIR}/bin/activate
                     pip install --upgrade pip
