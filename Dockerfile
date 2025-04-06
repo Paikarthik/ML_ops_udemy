@@ -21,7 +21,7 @@ COPY hotel_reservation/. .
 RUN pip install --no-cache-dir -e .
 
 # Train the model before running the application
-RUN python pipelin/training_pipeline.py
+RUN python pipline/training_pipeline.py
 
 # Expose the port that Flask will run on
 EXPOSE 5000
