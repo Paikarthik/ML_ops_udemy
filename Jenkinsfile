@@ -4,7 +4,7 @@ pipeline{
     environment {
         VENV_DIR = 'venv'
         GCP_PROJECT = "studied-biplane-453706-i8"
-        GCLOUD_PATH = "/var/jenkins_home/google-cloud-sdk/bin"
+        GCLOUD_PATH = "/usr/bin/gcloud"
     }
 
     stages{
